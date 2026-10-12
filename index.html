@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMM Arcade</title>
+<style>
+body{margin:0;background:#101020;color:white;font-family:Arial,sans-serif;text-align:center}
+header{background:#17172c;padding:22px;color:#00e5ff;font-size:28px;font-weight:bold}
+p{color:#ccc}
+.coins{margin:18px;padding:15px;background:#252542;border-radius:12px}
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:15px}
+button{padding:18px 8px;border:1px solid #41416b;border-radius:12px;background:#242443;color:white;font-size:15px}
+button:active{background:#00aabb}
+#play{padding:25px}
+footer{padding:20px;color:#aaa}
+</style>
+</head>
+<body>
+<header>🎮 PMM ARCADE</header>
+<p>Play • Earn Demo Coins • Have Fun!</p>
+<div class="coins">🪙 Demo Coins: <b id="coins">0</b></div>
+<h3>Choose Your Game</h3>
+<div class="games" id="games"></div>
+<div id="play"></div>
+<footer>PMM Arcade | Amharic + English<br>Demo version — cash rewards are not available yet.</footer>
+<script>
+const names=[
+"Tap Challenge","Quick Quiz","Guess the Number","Memory Match",
+"Reaction Test","Lane Dodge","Rock Paper Scissors","Odd Emoji",
+"Color Match","Word Scramble","Emoji Quiz","Memory Sequence",
+"Spot the Difference","True or False","Typing Challenge","Animal Quiz"
+];
+let coins=0;
+const area=document.getElementById("play");
+names.forEach((name,i)=>{
+ let b=document.createElement("button");
+ b.textContent=(i+1)+". "+name;
+ b.onclick=()=>start(i);
+ document.getElementById("games").appendChild(b);
+});
+function start(i){
+ area.innerHTML="<h3>"+names[i]+"</h3><p>Demo game session — play for 15 seconds!</p><button id='start'>Start</button><div id='game'></div>";
+ document.getElementById("start").onclick=()=>{
+  let start=Date.now(),g=document.getElementById("game");
+  g.innerHTML="<p>Playing...</p><button id='tap'>Tap me!</button>";
+  let count=0;
+  document.getElementById("tap").onclick=()=>{count++;g.querySelector("p").textContent="Taps: "+count;};
+  setTimeout(()=>{
+   if(!document.getElementById("game"))return;
+   coins+=15;document.getElementById("coins").textContent=coins;
+   g.innerHTML="<p>Finished! +15 demo coins 🪙</p>";
+  },15000);
+ };
+}
+</script>
+</body>
+</html>
